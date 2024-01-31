@@ -12,22 +12,22 @@
 # print(list_tr)
 
 
-import requests
-import bs4 as bs
+# import requests
+# import bs4 as bs
 
-url = 'https://www.zomato.com/bangalore/top-restaurants'    
-req = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})    
-html = req.text    
-soup = bs.BeautifulSoup(html, "html.parser")
+# url = 'https://www.zomato.com/bangalore/top-restaurants'    
+# req = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})    
+# html = req.text    
+# soup = bs.BeautifulSoup(html, "html.parser")
 
-for item in soup.select('.search-result'):
-	try:
-		print('----------------------------------------')
-		print(item)
+# for item in soup.select('.search-result'):
+# 	try:
+# 		print('----------------------------------------')
+# 		print(item)
 
-	except Exception as e:
-		#raise e
-		print('Nill')
+# 	except Exception as e:
+# 		#raise e
+# 		print('Nill')
 
 # ---------- USing Scrapy -------------- #
 
@@ -46,20 +46,20 @@ for item in soup.select('.search-result'):
 #             print(title.strip())
 
 
-# from selenium import webdriver
-# from selenium.webdriver.common.by import By
-# import re
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import re
 
-# # 1. Set up
-# PAT = "C:\Program Files (x86)\chromedriver.exe"
-# driver = webdriver.Chrome(PAT)
-# url = "https://www.zomato.com/bangalore"
-# # 2. Access the website
-# driver.get(url)
+# 1. Set up
+PAT = "C:\Program Files (x86)\chromedriver.exe"
+driver = webdriver.Chrome(PAT)
+url = "https://www.zomato.com/bangalore"
+# 2. Access the website
+driver.get(url)
 
 # # Identify the container element (replace with actual selector)
 # container = driver.find_element_by_css_selector('#root > div')
-# container = driver.find_element_by_css_selector("#root > div > div:nth-child(9)")
+container = driver.find_element_by_xpath('//*[@id="root"]/div')
 # print(container)
 # while container.find_elements_by_xpath('//*[@id="root"]/div/div[9]'):
     
@@ -80,27 +80,28 @@ for item in soup.select('.search-result'):
 # restaurant_names = restaurant_names.split("\n")
 # for name in restaurant_names:
 #     print(name)
+# print(container.text)
 
+# Starting pallet element
+pallet_xpath_base = "/html/body/div[1]/div/div["
 
-# # Starting pallet element
-# pallet_xpath_base = "/html/body/div[1]/div/div["
+# Loop through pallets (adjust range as needed)
+for i in range(10, 11):
+    # Construct the current pallet XPath
+    pallet_xpath = pallet_xpath_base + str(i) + "]"
+    # print(type(pallet_xpath))
 
-# # Loop through pallets (adjust range as needed)
-# for i in range(10, 21):
-#     # Construct the current pallet XPath
-#     pallet_xpath = pallet_xpath_base + str(i) + "]"
-#     # print(type(pallet_xpath))
-
-#     # Find the current pallet element
-#     pallet_element = container.find_elements_by_xpath(pallet_xpath)
+    # Find the current pallet element
+    pallet_element = container.find_elements_by_xpath(pallet_xpath)
+    print(pallet_element.text)
 
     
-#     for pallet_element in container.find_elements_by_xpath(pallet_xpath):  # Iterate through list
-#         print(pallet_element.get_attribute())
-        # restaurant_names = [
-        #     name.text
-        #     for name in pallet_element.find_elements_by_css_selector('#root > div > div:nth-child(10) > div > div:nth-child(2) > div > div > a.sc-bvCTgw.dIvKTC > div:nth-child(2) > p.sc-1hez2tp-0.sc-iEPtyo.dJHUYi')
-        # ]
+    # for pallet_element in container.find_elements_by_xpath(pallet_xpath):  # Iterate through list
+    #     print(pallet_element.get_attribute())
+    #     restaurant_names = [
+    #         name.text
+    #         for name in pallet_element.find_elements_by_xpath('')
+    #     ]
         # print(restaurant_names)
         # restaurant_prices = [
         #     price.text for price in pallet_element.find_elements_by_xpath("/html/body/div[1]/div/div[92]/div/div[1]/div/div/a[2]/div[2]/p[2]")
